@@ -1,0 +1,24 @@
+# Fasta Regions and Paf Files
+
+rangeDiff=10000
+
+hg38_start=149069641
+hg38_end=149497809
+
+hg38_min=$((hg38_start - rangeDiff))
+hg38_max=$((hg38_end + rangeDiff))
+
+samtools faidx ./genomes/hg38.fa chr7:$hg38_min-$hg38_max -o ./fasta_regions/hg38_KZFPcluster_chr7_pm10000bp.fa
+
+
+#### Hoxb1
+
+# hg38
+samtools faidx ./hg38.fa chr17:48,526,807-48,627,161 -o ./hg38_hoxb_cluster_region.fa
+
+# mm39
+samtools faidx ./mm39.fa chr11:96,159,502-96,263,131 -o ./mm39_hoxb_cluster_region.fa
+
+# Lastz
+
+lastz hg38_hoxb_cluster_region.fa mm39_hoxb_cluster_region.fa --format=PAF > QUERY_mouse_mm39_chr11_hoxb_cluster_TARGET_human_hg38_chr17_hoxb_cluster_lastz.paf
